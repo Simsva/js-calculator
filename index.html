@@ -5,10 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
 
+    <link rel="stylesheet" href="css/index.css"></link>
     <script src="js/calc.js"></script>
+    <script src="js/index.js"></script>
   </head>
   <body>
-    <input type="text" id="expr" name="Expression" />
-    <button onclick="evaluateExpression()">Evaluate</button>
+    <div id="calc">
+      <div id="answerField">
+        <!-- Answer, rad/deg etc -->
+      </div>
+
+      <div id="numbers">
+        <table class="tbutton">
+          <tr>
+            <th><button>7</button></th>
+            <th><button>8</button></th>
+            <th><button>9</button></th>
+          </tr>
+          <tr>
+            <th><button>4</button></th>
+            <th><button>5</button></th>
+            <th><button>6</button></th>
+          </tr>
+          <tr>
+            <th><button>1</button></th>
+            <th><button>2</button></th>
+            <th><button>3</button></th>
+          </tr>
+          <tr>
+            <th><button>0</button></th>
+            <th><button>.</button></th>
+            <th><button>=</button></th>
+          </tr>
+        </table>
+        <ul class="tbutton operbutton">
+          <li><button>&LeftArrow;</button></li>
+          <li><button>&div;</button></li>
+          <li><button>&Cross;</button></li>
+          <li><button>&minus;</button></li>
+          <li><button>&plus;</button></li>
+        </ul>
+      </div>
+
+      <!-- Use checkbox hack to display functions on click -->
+      <input type="checkbox" id="showFunc" />
+      <label for="showFunc">
+        <div id="functions">
+          <div>&lt;</div>
+          <table class="tbutton funcbutton">
+            <tr>
+              <th><button>INV</button></th>
+              <th><button>DEG</button></th>
+              <th><button>%</button></th>
+            </tr>
+            <tr>
+              <th><button>sin</button></th>
+              <th><button>cos</button></th>
+              <th><button>tan</button></th>
+            </tr>
+            <tr>
+              <th><button>ln</button></th>
+              <th><button>log</button></th>
+              <th><button>&Sqrt;</button></th>
+            </tr>
+            <tr>
+              <th><button>&pi;</button></th>
+              <th><button>e</button></th>
+              <th><button>^</button></th>
+            </tr>
+            <tr>
+              <th><button>(</button></th>
+              <th><button>)</button></th>
+              <th><button>!</button></th>
+            </tr>
+          </table>
+        </div>
+      </label>
+    </div>
   </body>
 </html>

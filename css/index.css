@@ -1,0 +1,111 @@
+#calc {
+  width: 500px;
+  height: 650px;
+  position: relative;
+  overflow: hidden;
+  background-color: pink;
+}
+
+#answerField {
+  width: 100%;
+  height: 40%;
+  background-color: #242424;
+}
+
+#numbers {
+  width: 95%;
+  height: 60%;
+  float: left;
+  background-color: #181818;
+}
+
+#numbers > table {
+  width: 75%;
+  height: 100%;
+  float: left;
+}
+
+#numbers > ul {
+  display: table;
+  width: 25%;
+  height: 100%;
+  float: left;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-left: solid #303030 thin;
+}
+
+#numbers > ul > li {
+  display: block;
+  height: 20%;
+}
+
+#functions {
+  -webkit-transition: right 200ms ease-in-out;
+  -moz-transition: right 200ms ease-in-out;
+  -o-transition: right 200ms ease-in-out;
+  transition: right 200ms ease-in-out;
+
+  /* Change right with #showFunc checkbox hack to animate */
+  width: 75%;
+  height: 60%;
+  position: absolute;
+  right: -70%;
+  background-color: #2b64b7;
+}
+
+#functions > div {
+  width: 6.7%;
+  height: 100%;
+  padding: 50% 0;
+  color: white;
+  font: 1.5em "Arial";
+  font-weight: bold;
+  text-align: center;
+  float: left;
+}
+
+#functions > table {
+  width: 93.3%;
+  height: 100%;
+  float: left;
+}
+
+#showFunc {
+  visibility: hidden;
+  position: fixed;
+}
+
+#showFunc:checked + label > div {
+  right: 0px;
+}
+
+.tbutton button {
+  border: none;
+  width: 100%;
+  height: 100%;
+  background-color: #0000;
+  color: white;
+  font: 2em "Arial";
+  font-weight: bold;
+}
+
+.tbutton button:focus {
+  outline: none;
+}
+
+.tbutton button:active {
+  background-color: #fff3;
+}
+
+.funcbutton button {
+  font: 1.3em "Arial";
+  font-weight: normal;
+}
+
+.operbutton button {
+  font: 1.5em "Arial";
+  font-weight: normal;
+  color: #3070cf;
+}
