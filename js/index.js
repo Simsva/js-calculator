@@ -37,11 +37,11 @@ function handleClick(name) {
     case ")":
       console.log("Op ", name);
       if (currentNum === "") {
-        if (name === "−" || name === ")") {
-          stack.push(name);
-        }
+        if (name === "−") currentNum = "-";
+        else if (name === "(") stack.push("(");
       } else {
-        stack.push(currentNum, name);
+        if (name === "(") stack.push(currentNum, "⨯", name);
+        else stack.push(currentNum, name);
         currentNum = "";
       }
       break;
@@ -51,13 +51,31 @@ function handleClick(name) {
         stack.push(currentNum);
         currentNum = "";
       }
-      let rpn = parseToRPN(stack);
-      console.log(evalRPN(rpn));
+      try {
+        let rpn = parseToRPN(stack);
+        console.log(rpn);
+        let result = evalRPN(rpn.reverse()).toString();
+        result.replace("-", "−");
+        console.log(result);
+        if (result !== "NaN") {
+          currentNum = result;
+          stack = [];
+        }
+      } catch (e) {
+        console.error(e);
+      }
       break;
     case "←":
+      //
       console.log("Back");
-      if (currentNum === "") stack.pop();
-      else currentNum = currentNum.slice(0, -1);
+      if (currentNum === "") {
+        stack.pop();
+        if (stack.length > 0 && stack[stack.length - 1].isNum()) {
+          currentNum = stack.pop();
+        }
+      } else {
+        currentNum = currentNum.slice(0, -1);
+      }
       break;
     case "INV":
     case "DEG":

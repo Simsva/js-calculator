@@ -11,21 +11,21 @@ let operators = {
       return x + y;
     },
   },
-  "-": {
+  "−": {
     precedence: 2,
     associativity: "left",
     func: (x, y) => {
       return x - y;
     },
   },
-  "*": {
+  "⨯": {
     precedence: 3,
     associativity: "left",
     func: (x, y) => {
       return x * y;
     },
   },
-  "/": {
+  "÷": {
     precedence: 3,
     associativity: "left",
     func: (x, y) => {
@@ -36,16 +36,28 @@ let operators = {
     precedence: 5,
     associativity: "right",
     func: (x, y) => {
-      return x ** y;
+      return Math.pow(x, y);
     },
   },
 };
 
 // Functions with arbitrarily many arguments and infinite precedence
 let functions = {
-  sqrt: {
+  "√": {
     args: 1,
     func: Math.sqrt,
+  },
+  ln: {
+    args: 1,
+    func: Math.log,
+  },
+  exp: {
+    args: 1,
+    func: Math.exp,
+  },
+  log: {
+    args: 1,
+    func: Math.log10,
   },
   sin: {
     args: 1,
@@ -59,6 +71,19 @@ let functions = {
     args: 1,
     func: Math.tan,
   },
+  asin: {
+    args: 1,
+    func: Math.asin,
+  },
+  acos: {
+    args: 1,
+    func: Math.acos,
+  },
+  atan: {
+    args: 1,
+    func: Math.atan,
+  },
+  // Multiargument function test
   max: {
     args: 2,
     func: Math.max,
@@ -67,10 +92,17 @@ let functions = {
     args: 2,
     func: Math.min,
   },
-  pi: {
+  // Jank constants
+  π: {
     args: 0,
     func: () => {
       return Math.PI;
+    },
+  },
+  e: {
+    args: 0,
+    func: () => {
+      return Math.E;
     },
   },
 };
@@ -80,14 +112,14 @@ function parseToRPN(expr) {
   let operatorStack = [];
   let output = [];
 
-  let tokens = expr.split(" ");
-  for (let i = 0; i < tokens.length; i++) {
-    let token = tokens[i];
+  for (let i = 0; i < expr.length; i++) {
+    let token = expr[i];
 
-    if (token === "?") {
+    /* if (token === "?") {
       console.log(output);
       console.log(operatorStack);
-    } else if (token.isNum()) {
+    } else */
+    if (token.isNum()) {
       output.push(parseFloat(token));
     } else if (Object.keys(functions).includes(token)) {
       operatorStack.push(token);
