@@ -49,20 +49,24 @@ function handleClick(name) {
       console.log("Eq");
       if (currentNum !== "") {
         stack.push(currentNum);
-        currentNum = "";
       }
+
+      let result;
       try {
         let rpn = parseToRPN(stack);
         console.log(rpn);
-        let result = evalRPN(rpn.reverse()).toString();
+        result = evalRPN(rpn.reverse()).toString();
         result.replace("-", "−");
         console.log(result);
-        if (result !== "NaN") {
-          currentNum = result;
-          stack = [];
-        }
       } catch (e) {
         console.error(e);
+      }
+
+      if (result && result !== "NaN") {
+        currentNum = result;
+        stack = [];
+      } else if (stack.length > 0 && stack[stack.length - 1].isNum()) {
+        currentNum = stack.pop();
       }
       break;
     case "←":
