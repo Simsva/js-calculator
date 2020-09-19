@@ -8,6 +8,8 @@ let stack = [],
 function handleClick(name) {
   switch (name) {
     // TODO: Fix % and ! support
+    // TODO: Add inverse functions
+    // TODO: Clean up/separate code
     // Yes, really
     case "1":
     case "2":
@@ -24,7 +26,7 @@ function handleClick(name) {
       break;
     case ".":
       console.log("Decimal");
-      if (!currentNum.contains(".")) {
+      if (!currentNum.includes(".")) {
         currentNum += name;
       }
       break;
