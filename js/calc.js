@@ -11,21 +11,21 @@ let operators = {
       return x + y;
     },
   },
-  "−": {
+  "-": {
     precedence: 2,
     associativity: "left",
     func: (x, y) => {
       return x - y;
     },
   },
-  "⨯": {
+  "*": {
     precedence: 3,
     associativity: "left",
     func: (x, y) => {
       return x * y;
     },
   },
-  "÷": {
+  "/": {
     precedence: 3,
     associativity: "left",
     func: (x, y) => {
@@ -43,7 +43,7 @@ let operators = {
 
 // Functions with arbitrarily many arguments and infinite precedence
 let functions = {
-  "√": {
+  sqrt: {
     args: 1,
     func: Math.sqrt,
   },
@@ -93,7 +93,7 @@ let functions = {
     func: Math.min,
   },
   // Jank constants
-  π: {
+  pi: {
     args: 0,
     func: () => {
       return Math.PI;

@@ -3,6 +3,10 @@ function test(w) {
   func.setAttribute("style", `width: ${w}%;`);
 }
 
+// Clears everything on back press when non-zero
+// Decrements by one every button press (so when
+// set to 2 it carries over to the next press)
+let clearAll = 0;
 let stack = [],
   currentNum = "";
 function handleClick(name) {
@@ -22,6 +26,10 @@ function handleClick(name) {
     case "9":
     case "0":
       console.log("Num ", name);
+      if (isNaN(currentNum) && currentNum !== "−") {
+        stack.push(currentNum, "⨯");
+        currentNum = "";
+      }
       currentNum += name;
       break;
     case ".":
@@ -39,8 +47,12 @@ function handleClick(name) {
     case ")":
       console.log("Op ", name);
       if (currentNum === "") {
-        if (name === "−") currentNum = "-";
+        if (name === "−") currentNum = "−";
         else if (name === "(") stack.push("(");
+        // Jank way to check if operators can be put on top of the stack
+        // TODO: Switch from a switch statement (hehe) to something more dynamic
+        else if ([")", "e", "π"].includes(stack[stack.length - 1]))
+          stack.push(name);
       } else {
         if (name === "(") stack.push(currentNum, "⨯", name);
         else stack.push(currentNum, name);
@@ -55,10 +67,19 @@ function handleClick(name) {
 
       let result;
       try {
-        let rpn = parseToRPN(stack);
+        // Replace some characters so the parser understands
+        let correctedStack = stack
+          .join(" ")
+          .replace("÷", "/")
+          .replace("⨯", "*")
+          .replace("−", "-")
+          .replace("√", "sqrt")
+          .replace("π", "pi")
+          .split(" ");
+        console.log(correctedStack);
+        let rpn = parseToRPN(correctedStack);
         console.log(rpn);
-        result = evalRPN(rpn.reverse()).toString();
-        result.replace("-", "−");
+        result = evalRPN(rpn.reverse()).toString().replace("-", "−");
         console.log(result);
       } catch (e) {
         console.error(e);
@@ -67,13 +88,19 @@ function handleClick(name) {
       if (result && result !== "NaN") {
         currentNum = result;
         stack = [];
+        // Clear everything on next BACK press
+        clearAll = 2;
       } else if (stack.length > 0 && stack[stack.length - 1].isNum()) {
         currentNum = stack.pop();
       }
       break;
     case "←":
-      //
       console.log("Back");
+      if (clearAll) {
+        stack = [];
+        currentNum = "";
+      }
+
       if (currentNum === "") {
         stack.pop();
         if (stack.length > 0 && stack[stack.length - 1].isNum()) {
@@ -119,13 +146,13 @@ function handleClick(name) {
     case "e":
       console.log("Const ", name);
       if (currentNum !== "") {
-        stack.push(currentNum, "⨯", name);
-        currentNum = "";
-      } else {
-        stack.push(name);
+        stack.push(currentNum, "⨯");
       }
+      currentNum = name;
       break;
   }
+
+  if (clearAll) clearAll--;
 
   let tmp = document.getElementById("answerField");
   tmp.innerHTML = stack.join("") + currentNum;
