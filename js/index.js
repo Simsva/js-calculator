@@ -1,8 +1,41 @@
-function test(w) {
-  let func = document.getElementById("functions");
-  func.setAttribute("style", `width: ${w}%;`);
+function evaluate(stack) {
+  let result;
+  try {
+    // Replace some characters so the parser understands
+    let correctedStack = stack
+      .join(" ")
+      .replace("÷", "/")
+      .replace("⨯", "*")
+      .replace("−", "-")
+      .replace("√", "sqrt")
+      .replace("π", "pi")
+      .split(" ");
+
+    if (trigDeg) {
+      correctedStack = correctedStack
+        .join(" ")
+        .replace("sin", "deg_sin")
+        .replace("cos", "deg_cos")
+        .replace("tan", "deg_tan")
+        .replace("asin", "deg_asin")
+        .replace("acos", "deg_acos")
+        .replace("atan", "deg_atan")
+        .split(" ");
+    }
+
+    console.log(correctedStack);
+    let rpn = parseToRPN(correctedStack);
+    console.log(rpn);
+    result = evalRPN(rpn.reverse()).toString().replace("-", "−");
+    console.log(result);
+  } catch (e) {
+    console.error(e);
+  }
+
+  return result;
 }
 
+let trigDeg = false;
 // Clears everything on back press when non-zero
 // Decrements by one every button press (so when
 // set to 2 it carries over to the next press)
@@ -11,10 +44,10 @@ let stack = [],
   currentNum = "";
 function handleClick(name) {
   switch (name) {
-    // TODO: Fix % and ! support
+    // TODO: Implement % and ! support
     // TODO: Add inverse functions
     // TODO: Clean up/separate code
-    // Yes, really
+    // Yes, really (this was temporary but now I'm too lazy to change it)
     case "1":
     case "2":
     case "3":
@@ -26,7 +59,7 @@ function handleClick(name) {
     case "9":
     case "0":
       console.log("Num ", name);
-      if (isNaN(currentNum) && currentNum !== "−") {
+      if (isNaN(currentNum) && currentNum !== "−" && currentNum !== ".") {
         stack.push(currentNum, "⨯");
         currentNum = "";
       }
@@ -65,25 +98,7 @@ function handleClick(name) {
         stack.push(currentNum);
       }
 
-      let result;
-      try {
-        // Replace some characters so the parser understands
-        let correctedStack = stack
-          .join(" ")
-          .replace("÷", "/")
-          .replace("⨯", "*")
-          .replace("−", "-")
-          .replace("√", "sqrt")
-          .replace("π", "pi")
-          .split(" ");
-        console.log(correctedStack);
-        let rpn = parseToRPN(correctedStack);
-        console.log(rpn);
-        result = evalRPN(rpn.reverse()).toString().replace("-", "−");
-        console.log(result);
-      } catch (e) {
-        console.error(e);
-      }
+      let result = evaluate(stack);
 
       if (result && result !== "NaN") {
         currentNum = result;
@@ -154,8 +169,16 @@ function handleClick(name) {
 
   if (clearAll) clearAll--;
 
-  let tmp = document.getElementById("answerField");
-  tmp.innerHTML = stack.join("") + currentNum;
+  // Display current expression
+  let expr = document.getElementById("expression");
+  expr.innerText = stack.join("") + currentNum;
+
+  // Display temporary value
+  let tmpAnswer = document.getElementById("tmpAnswer");
+  let tmpResult = evaluate(stack.concat([currentNum]));
+
+  tmpAnswer.innerText =
+    isFinite(tmpResult) && tmpResult !== expr.innerText ? tmpResult : "";
 }
 
 window.addEventListener("load", () => {

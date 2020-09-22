@@ -12,6 +12,36 @@
   background-color: #242424;
 }
 
+#trigType {
+  width: 4em;
+  /*height: 2em;*/
+  height: 20%;
+}
+
+#trigType button {
+  /*margin: 20px;*/
+  margin-left: 10px;
+}
+
+#expression {
+  width: calc(100% - 40px);
+  height: 50%;
+  margin: 0 20px;
+  color: #fff;
+  font: 2em "Arial";
+  text-align: right;
+  word-wrap: break-word;
+}
+
+#tmpAnswer {
+  width: cals(100% - 40px);
+  height: 50%;
+  margin: 0 20px;
+  color: #e0e0e0;
+  font: 1.5em "Arial";
+  text-align: right;
+}
+
 #numbers {
   width: 95%;
   height: 60%;
@@ -108,4 +138,10 @@
   font: 1.5em "Arial";
   font-weight: normal;
   color: #3070cf;
+}
+
+.trigbutton button {
+  font: 1.5em "Arial";
+  font-weight: normal;
+  color: #e0e0e0;
 }
