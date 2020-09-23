@@ -35,7 +35,8 @@ function evaluate(stack) {
   return result;
 }
 
-let trigDeg = false;
+let inverse = false,
+  trigDeg = false;
 // Clears everything on back press when non-zero
 // Decrements by one every button press (so when
 // set to 2 it carries over to the next press)
@@ -62,7 +63,8 @@ function handleClick(name) {
       if (isNaN(currentNum) && currentNum !== "−" && currentNum !== ".") {
         stack.push(currentNum, "⨯");
         currentNum = "";
-      }
+      } else if (stack[stack.length - 1] === ")") stack.push("⨯");
+
       currentNum += name;
       break;
     case ".":
@@ -94,19 +96,21 @@ function handleClick(name) {
       break;
     case "=":
       console.log("Eq");
-      if (currentNum !== "") {
-        stack.push(currentNum);
-      }
+      if (currentNum || stack.length) {
+        if (currentNum !== "") {
+          stack.push(currentNum);
+        }
 
-      let result = evaluate(stack);
+        let result = evaluate(stack);
 
-      if (result && result !== "NaN") {
-        currentNum = result;
-        stack = [];
-        // Clear everything on next BACK press
-        clearAll = 2;
-      } else if (stack.length > 0 && stack[stack.length - 1].isNum()) {
-        currentNum = stack.pop();
+        if (result && result !== "NaN") {
+          currentNum = result;
+          stack = [];
+          // Clear everything on next BACK press
+          clearAll = 2;
+        } else if (stack.length > 0 && stack[stack.length - 1].isNum()) {
+          currentNum = stack.pop();
+        }
       }
       break;
     case "←":
@@ -129,6 +133,8 @@ function handleClick(name) {
     case "DEG":
     case "RAD":
       console.log("Toggle ", name);
+      if (name === "INV") inverse = !inverse;
+      else trigDeg = !trigDeg;
       break;
     case "sin":
     case "cos":
@@ -174,11 +180,18 @@ function handleClick(name) {
   expr.innerText = stack.join("") + currentNum;
 
   // Display temporary value
-  let tmpAnswer = document.getElementById("tmpAnswer");
-  let tmpResult = evaluate(stack.concat([currentNum]));
+  if (expr.innerText) {
+    let tmpAnswer = document.getElementById("tmpAnswer");
+    let tmpResult = evaluate(stack.concat([currentNum]));
 
-  tmpAnswer.innerText =
-    isFinite(tmpResult) && tmpResult !== expr.innerText ? tmpResult : "";
+    tmpAnswer.innerText =
+      isFinite(tmpResult) && tmpResult !== expr.innerText ? tmpResult : "";
+  }
+
+  // Toggle button names
+  let trigTypeButtons = document.querySelectorAll(".trigbutton");
+  for (let i = 0; i < trigTypeButtons.length; i++)
+    trigTypeButtons[i].innerText = trigDeg ? "DEG" : "RAD";
 }
 
 window.addEventListener("load", () => {

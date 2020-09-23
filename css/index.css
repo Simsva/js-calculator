@@ -18,11 +18,6 @@
   height: 20%;
 }
 
-#trigType button {
-  /*margin: 20px;*/
-  margin-left: 10px;
-}
-
 #expression {
   width: calc(100% - 40px);
   height: 50%;
@@ -140,7 +135,8 @@
   color: #3070cf;
 }
 
-.trigbutton button {
+#trigType button {
+  margin-left: 10px;
   font: 1.5em "Arial";
   font-weight: normal;
   color: #e0e0e0;

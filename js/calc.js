@@ -83,6 +83,31 @@ let functions = {
     args: 1,
     func: Math.atan,
   },
+  // Trig functions in degrees (really jank)
+  deg_sin: {
+    args: 1,
+    func: (x) => Math.sin((x * Math.PI) / 180),
+  },
+  deg_cos: {
+    args: 1,
+    func: (x) => Math.cos((x * Math.PI) / 180),
+  },
+  deg_tan: {
+    args: 1,
+    func: (x) => Math.tan((x * Math.PI) / 180),
+  },
+  deg_asin: {
+    args: 1,
+    func: (x) => (Math.asin(x) * 180) / Math.PI,
+  },
+  deg_acos: {
+    args: 1,
+    func: (x) => (Math.acos(x) * 180) / Math.PI,
+  },
+  deg_atan: {
+    args: 1,
+    func: (x) => (Math.atan(x) * 180) / Math.PI,
+  },
   // Multiargument function test
   max: {
     args: 2,
