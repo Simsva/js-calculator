@@ -195,6 +195,35 @@ function handleClick(name) {
     trigTypeButtons[i].innerText = trigDeg ? "DEG" : "RAD";
 }
 
+window.addEventListener("keydown", (e) => {
+  console.log(e.key);
+
+  if (e.key === "f") {
+    let showFunc = document.getElementById("showFunc");
+    showFunc.checked = !showFunc.checked;
+  }
+
+  let lookup = {
+    p: "π",
+    s: "sin",
+    c: "cos",
+    t: "tan",
+    l: "ln",
+    L: "log",
+    "*": "⨯",
+    "-": "−",
+    "/": "÷",
+    // Every dead key works as exponentiation, aka jank
+    Dead: "^",
+    Enter: "=",
+    Backspace: "←",
+    ",": ".",
+    i: "INV",
+    r: "RAD",
+  };
+  handleClick(lookup[e.key] ? lookup[e.key] : e.key);
+});
+
 window.addEventListener("load", () => {
   let buttons = document.querySelectorAll(".tbutton button");
   for (let i = 0; i < buttons.length; i++) {
