@@ -2,24 +2,25 @@ function evaluate(stack) {
   let result;
   try {
     // Replace some characters so the parser understands
+    console.log(stack);
     let correctedStack = stack
       .join(" ")
-      .replace("÷", "/")
-      .replace("⨯", "*")
-      .replace("−", "-")
-      .replace("√", "sqrt")
-      .replace("π", "pi")
+      .replace(/÷/g, "/")
+      .replace(/⨯/g, "*")
+      .replace(/−/g, "-")
+      .replace(/√/g, "sqrt")
+      .replace(/π/g, "pi")
       .split(" ");
 
     if (trigDeg) {
       correctedStack = correctedStack
         .join(" ")
-        .replace("sin", "deg_sin")
-        .replace("cos", "deg_cos")
-        .replace("tan", "deg_tan")
-        .replace("asin", "deg_asin")
-        .replace("acos", "deg_acos")
-        .replace("atan", "deg_atan")
+        .replace(/sin/g, "deg_sin")
+        .replace(/cos/g, "deg_cos")
+        .replace(/tan/g, "deg_tan")
+        .replace(/asin/g, "deg_asin")
+        .replace(/acos/g, "deg_acos")
+        .replace(/atan/g, "deg_atan")
         .split(" ");
     }
 
@@ -103,7 +104,7 @@ function handleClick(name) {
 
         let result = evaluate(stack);
 
-        if (result && result !== "NaN") {
+        if (result && !isNaN(result)) {
           currentNum = result;
           stack = [];
           // Clear everything on next BACK press
