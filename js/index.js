@@ -169,7 +169,7 @@ function handleClick(name) {
       console.log("Const ", name);
       if (currentNum !== "") {
         stack.push(currentNum, "⨯");
-      }
+      } else if (stack[stack.length - 1] === ")") stack.push("⨯");
       currentNum = name;
       break;
   }
@@ -210,6 +210,7 @@ window.addEventListener("keydown", (e) => {
     t: "tan",
     l: "ln",
     L: "log",
+    S: "√",
     "*": "⨯",
     "-": "−",
     "/": "÷",
